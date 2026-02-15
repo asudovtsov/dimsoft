@@ -12,14 +12,16 @@ The C++ implementation is in `cpp/` and uses `paintWindow(...)`.
 - `cmake`
 - `g++`
 - `qt6-base-dev`
+- `qt6-declarative-dev`
 - `libkf6config-dev`
 - `libkf6coreaddons-dev`
+- `libkf6kcmutils-dev`
 
 ### Build
 
 ```bash
 cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release
-cmake --build cpp/build -j
+cmake --build cpp/build -j"$(nproc)"
 ```
 
 ### Install system-wide (/usr)
@@ -33,6 +35,8 @@ Plugin install path:
 - `/usr/lib/x86_64-linux-gnu/qt6/plugins/kwin/effects/plugins/dimsoft.so`
 
 ### Configure values
+
+You can configure the effect in **System Settings -> Window Management -> Desktop Effects -> dimsoft (settings)**.
 
 The effect reads values from:
 

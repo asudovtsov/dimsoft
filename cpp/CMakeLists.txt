@@ -18,6 +18,7 @@ endif()
 find_package(Qt6 REQUIRED COMPONENTS Core DBus Gui Quick Widgets)
 find_package(KF6Config REQUIRED)
 find_package(KF6CoreAddons REQUIRED)
+find_package(KF6KCMUtils REQUIRED)
 find_package(KWin REQUIRED)
 
 add_library(dimsoft MODULE
@@ -38,3 +39,23 @@ target_link_libraries(dimsoft
 )
 
 install(TARGETS dimsoft DESTINATION "${DIMSOFT_INSTALL_LIBDIR}/qt6/plugins/kwin/effects/plugins")
+
+add_library(kwin_dimsoft_config MODULE
+    src/dimsoftconfig.cpp
+)
+
+set_target_properties(kwin_dimsoft_config PROPERTIES
+    PREFIX ""
+)
+
+target_link_libraries(kwin_dimsoft_config
+    PRIVATE
+        KF6::ConfigCore
+        KF6::CoreAddons
+        KF6::KCMUtils
+        Qt6::Core
+        Qt6::DBus
+        Qt6::Widgets
+)
+
+install(TARGETS kwin_dimsoft_config DESTINATION "${DIMSOFT_INSTALL_LIBDIR}/qt6/plugins/kwin/effects/configs")

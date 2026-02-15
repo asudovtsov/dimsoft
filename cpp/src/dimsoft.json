@@ -12,5 +12,6 @@
         "Id": "dimsoft",
         "License": "MIT",
         "Name": "dimsoft"
-    }
+    },
+    "X-KDE-ConfigModule": "kwin_dimsoft_config"
 }

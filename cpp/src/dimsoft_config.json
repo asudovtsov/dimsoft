@@ -1,0 +1,10 @@
+{
+    "KPlugin": {
+        "Category": "Appearance",
+        "Description": "Configure brightness and saturation for the dimsoft effect",
+        "EnabledByDefault": true,
+        "Id": "kwin_dimsoft_config",
+        "License": "MIT",
+        "Name": "dimsoft Settings"
+    }
+}
