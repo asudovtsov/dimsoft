@@ -1,0 +1,16 @@
+{
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "asudovtsov"
+            }
+        ],
+        "Category": "Appearance",
+        "Description": "Applies configurable brightness and saturation to all windows",
+        "EnabledByDefault": false,
+        "Icon": "preferences-desktop-color",
+        "Id": "dimsoft",
+        "License": "MIT",
+        "Name": "dimsoft"
+    }
+}

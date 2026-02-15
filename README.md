@@ -1,32 +1,55 @@
 # KWin Effect: dimsoft
 
-`dimsoft` is a KWin Wayland effect that applies configurable brightness and saturation to all windows.
+`dimsoft` applies configurable brightness and saturation to managed windows.
 
-## What it does
+## C++ effect (Plasma 6)
 
-- Applies `Brightness` and `Saturation` to all managed windows in the current session.
-- Applies the same values to newly opened windows automatically.
-- Runs only in a Wayland Plasma session (`kwin_wayland`).
+The C++ implementation is in `cpp/` and uses `paintWindow(...)`.
 
-## Effect settings
+### Prerequisites
 
-- `Brightness` (0..100)
-- `Saturation` (0..100)
+- `kwin-dev`
+- `cmake`
+- `g++`
+- `qt6-base-dev`
+- `libkf6config-dev`
+- `libkf6coreaddons-dev`
 
-`100` means no change. Lower values dim/desaturate stronger.
+### Build
 
-## Install
+```bash
+cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release
+cmake --build cpp/build -j
+```
 
-1. Install the effect package:
-   - `kpackagetool6 --type KWin/Effect --install /home/asudovtsov/Projects/self/dimsoft`
-2. Open **System Settings -> Window Management -> Desktop Effects**.
-3. Enable **dimsoft**.
-4. Open effect settings and tune `Brightness` / `Saturation`.
+### Install for current user
 
-## Update after edits
+```bash
+cmake --install cpp/build --prefix "$HOME/.local"
+```
 
-- `kpackagetool6 --type KWin/Effect --upgrade /home/asudovtsov/Projects/self/dimsoft`
+Plugin install path:
 
-## Remove
+- `~/.local/<libdir>/qt6/plugins/kwin/effects/plugins/dimsoft.so` (usually `lib`)
 
-- `kpackagetool6 --type KWin/Effect --remove dimsoft`
+### Configure values
+
+The effect reads values from:
+
+- `[Effect-dimsoft][General] Brightness` (0..100)
+- `[Effect-dimsoft][General] Saturation` (0..100)
+
+Example:
+
+```bash
+kwriteconfig6 --file kwinrc --group Plugins --key dimsoftEnabled true
+kwriteconfig6 --file kwinrc --group "Effect-dimsoft" --group "General" --key Brightness 67
+kwriteconfig6 --file kwinrc --group "Effect-dimsoft" --group "General" --key Saturation 67
+qdbus6 org.kde.KWin /KWin reconfigure
+```
+
+`100` means no change.
+
+## Legacy JS package
+
+The previous scripted version is kept in `contents/` with `metadata.json` at repository root.
