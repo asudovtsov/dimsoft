@@ -37,10 +37,8 @@ void DimsoftEffect::paintWindow(const RenderTarget &renderTarget,
                                 const RenderViewport &viewport,
                                 EffectWindow *window, int mask, QRegion region,
                                 WindowPaintData &data) {
-  if (shouldAffectWindow(window)) {
-    data.multiplyBrightness(m_brightness);
-    data.multiplySaturation(m_saturation);
-  }
+  data.multiplyBrightness(m_brightness);
+  data.multiplySaturation(m_saturation);
 
   effects->paintWindow(renderTarget, viewport, window, mask, region, data);
 }
@@ -64,11 +62,6 @@ void DimsoftEffect::loadConfig() {
       toUnitRange(generalGroup.readEntry(QStringLiteral("Saturation"),
                                          qRound(kDefaultSaturation * 100.0)),
                   kDefaultSaturation);
-}
-
-bool DimsoftEffect::shouldAffectWindow(const EffectWindow *window) const {
-  return window && window->isManaged() && !window->isDeleted() &&
-         !window->isMinimized() && window->isVisible();
 }
 
 }  // namespace KWin
