@@ -4,96 +4,96 @@ function clamp(value, min, max) {
     return Math.min(Math.max(value, min), max);
 }
 
-var globalDimEffect = {
+var dimsoftEffect = {
     loadConfig: function () {
-        globalDimEffect.duration = animationTime(250);
-        globalDimEffect.brightness = clamp(effect.readConfig("Brightness", 67) / 100.0, 0.0, 1.0);
-        globalDimEffect.saturation = clamp(effect.readConfig("Saturation", 67) / 100.0, 0.0, 1.0);
+        dimsoftEffect.duration = animationTime(0);
+        dimsoftEffect.brightness = clamp(effect.readConfig("Brightness", 67) / 100.0, 0.0, 1.0);
+        dimsoftEffect.saturation = clamp(effect.readConfig("Saturation", 67) / 100.0, 0.0, 1.0);
     },
     startAnimation: function (window) {
         if (!window || !window.managed || window.deleted || window.minimized || !window.visible) {
-            globalDimEffect.cancelAnimationInstant(window);
+            dimsoftEffect.cancelAnimationInstant(window);
             return;
         }
 
-        if (window.globalDimAnimation) {
-            cancel(window.globalDimAnimation);
+        if (window.dimsoftAnimation) {
+            cancel(window.dimsoftAnimation);
         }
 
-        window.globalDimAnimation = set({
+        window.dimsoftAnimation = set({
             window: window,
             curve: QEasingCurve.InOutSine,
-            duration: globalDimEffect.duration,
-            keepAlive: false,
+            duration: dimsoftEffect.duration,
+            keepAlive: true,
             animations: [
                 {
                     type: Effect.Saturation,
-                    to: globalDimEffect.saturation
+                    to: dimsoftEffect.saturation
                 },
                 {
                     type: Effect.Brightness,
-                    to: globalDimEffect.brightness
+                    to: dimsoftEffect.brightness
                 }
             ]
         });
     },
     startAnimationInstant: function (window) {
-        globalDimEffect.startAnimation(window);
+        dimsoftEffect.startAnimation(window);
 
-        if (window.globalDimAnimation) {
-            complete(window.globalDimAnimation);
+        if (window.dimsoftAnimation) {
+            complete(window.dimsoftAnimation);
         }
     },
     cancelAnimationInstant: function (window) {
-        if (!window || !window.globalDimAnimation) {
+        if (!window || !window.dimsoftAnimation) {
             return;
         }
 
-        cancel(window.globalDimAnimation);
-        delete window.globalDimAnimation;
+        cancel(window.dimsoftAnimation);
+        delete window.dimsoftAnimation;
     },
     applyToAllWindowsInstant: function () {
         var windows = effects.stackingOrder;
         for (var i = 0; i < windows.length; ++i) {
-            globalDimEffect.cancelAnimationInstant(windows[i]);
-            globalDimEffect.startAnimationInstant(windows[i]);
+            dimsoftEffect.cancelAnimationInstant(windows[i]);
+            dimsoftEffect.startAnimationInstant(windows[i]);
         }
     },
     slotDesktopChanged: function () {
-        globalDimEffect.applyToAllWindowsInstant();
+        dimsoftEffect.applyToAllWindowsInstant();
     },
     slotWindowAdded: function (window) {
         window.windowDesktopsChanged.connect(() => {
-            globalDimEffect.cancelAnimationInstant(window);
-            globalDimEffect.startAnimationInstant(window);
+            // dimsoftEffect.cancelAnimationInstant(window);
+            dimsoftEffect.startAnimationInstant(window);
         });
         window.minimizedChanged.connect(() => {
-            if (window.minimized) {
-                globalDimEffect.cancelAnimationInstant(window);
-                return;
-            }
-            globalDimEffect.startAnimationInstant(window);
+            // if (window.minimized) {
+            //     dimsoftEffect.cancelAnimationInstant(window);
+            //     return;
+            // }
+            dimsoftEffect.startAnimationInstant(window);
         });
 
-        globalDimEffect.startAnimationInstant(window);
+        dimsoftEffect.startAnimationInstant(window);
     },
     slotConfigChanged: function () {
-        globalDimEffect.loadConfig();
-        globalDimEffect.applyToAllWindowsInstant();
+        dimsoftEffect.loadConfig();
+        dimsoftEffect.applyToAllWindowsInstant();
     },
     init: function () {
-        globalDimEffect.loadConfig();
+        dimsoftEffect.loadConfig();
 
-        effect.configChanged.connect(globalDimEffect.slotConfigChanged);
-        effects.windowAdded.connect(globalDimEffect.slotWindowAdded);
-        effects.windowClosed.connect(globalDimEffect.cancelAnimationInstant);
-        effects.desktopChanged.connect(globalDimEffect.slotDesktopChanged);
+        effect.configChanged.connect(dimsoftEffect.slotConfigChanged);
+        effects.windowAdded.connect(dimsoftEffect.slotWindowAdded);
+        effects.windowClosed.connect(dimsoftEffect.cancelAnimationInstant);
+        effects.desktopChanged.connect(dimsoftEffect.slotDesktopChanged);
 
         for (const window of effects.stackingOrder) {
-            globalDimEffect.slotWindowAdded(window);
+            dimsoftEffect.slotWindowAdded(window);
         }
-        globalDimEffect.applyToAllWindowsInstant();
+        dimsoftEffect.applyToAllWindowsInstant();
     }
 };
 
-globalDimEffect.init();
+dimsoftEffect.init();

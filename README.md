@@ -1,6 +1,6 @@
-# KWin Effect: Global Window Dimming
+# KWin Effect: dimsoft
 
-`coloroverlay` is a KWin Wayland effect that applies configurable brightness and saturation to all windows.
+`dimsoft` is a KWin Wayland effect that applies configurable brightness and saturation to all windows.
 
 ## What it does
 
@@ -18,15 +18,15 @@
 ## Install
 
 1. Install the effect package:
-   - `kpackagetool6 --type KWin/Effect --install /home/asudovtsov/Projects/self/color-overlay`
+   - `kpackagetool6 --type KWin/Effect --install /home/asudovtsov/Projects/self/dimsoft`
 2. Open **System Settings -> Window Management -> Desktop Effects**.
-3. Enable **Global Window Dimming**.
+3. Enable **dimsoft**.
 4. Open effect settings and tune `Brightness` / `Saturation`.
 
 ## Update after edits
 
-- `kpackagetool6 --type KWin/Effect --upgrade /home/asudovtsov/Projects/self/color-overlay`
+- `kpackagetool6 --type KWin/Effect --upgrade /home/asudovtsov/Projects/self/dimsoft`
 
 ## Remove
 
-- `kpackagetool6 --type KWin/Effect --remove coloroverlay`
+- `kpackagetool6 --type KWin/Effect --remove dimsoft`

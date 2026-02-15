@@ -10,9 +10,9 @@
         "Description": "Applies configurable brightness and saturation to all windows",
         "EnabledByDefault": false,
         "Icon": "preferences-desktop-color",
-        "Id": "coloroverlay",
+        "Id": "dimsoft",
         "License": "MIT",
-        "Name": "Global Window Dimming"
+        "Name": "dimsoft"
     },
     "X-KDE-Ordering": 10,
     "X-Plasma-API": "javascript",
