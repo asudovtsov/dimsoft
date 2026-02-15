@@ -22,15 +22,15 @@ cmake -S cpp -B cpp/build -DCMAKE_BUILD_TYPE=Release
 cmake --build cpp/build -j
 ```
 
-### Install for current user
+### Install system-wide (/usr)
 
 ```bash
-cmake --install cpp/build --prefix "$HOME/.local"
+sudo cmake --install cpp/build --prefix /usr
 ```
 
 Plugin install path:
 
-- `~/.local/<libdir>/qt6/plugins/kwin/effects/plugins/dimsoft.so` (usually `lib`)
+- `/usr/lib/x86_64-linux-gnu/qt6/plugins/kwin/effects/plugins/dimsoft.so`
 
 ### Configure values
 
