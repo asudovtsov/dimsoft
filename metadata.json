@@ -1,0 +1,20 @@
+{
+    "KPackageStructure": "KWin/Effect",
+    "KPlugin": {
+        "Authors": [
+            {
+                "Name": "asudovtsov"
+            }
+        ],
+        "Category": "Appearance",
+        "Description": "Applies configurable brightness and saturation to all windows",
+        "EnabledByDefault": false,
+        "Icon": "preferences-desktop-color",
+        "Id": "coloroverlay",
+        "License": "MIT",
+        "Name": "Global Window Dimming"
+    },
+    "X-KDE-Ordering": 10,
+    "X-Plasma-API": "javascript",
+    "X-KDE-ConfigModule": "kcm_kwin4_genericscripted"
+}
