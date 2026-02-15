@@ -43,13 +43,9 @@ Example:
 
 ```bash
 kwriteconfig6 --file kwinrc --group Plugins --key dimsoftEnabled true
-kwriteconfig6 --file kwinrc --group "Effect-dimsoft" --group "General" --key Brightness 67
-kwriteconfig6 --file kwinrc --group "Effect-dimsoft" --group "General" --key Saturation 67
+kwriteconfig6 --file kwinrc --group "Effect-dimsoft" --group "General" --key Brightness 70
+kwriteconfig6 --file kwinrc --group "Effect-dimsoft" --group "General" --key Saturation 100
 qdbus6 org.kde.KWin /KWin reconfigure
 ```
 
-`100` means no change.
-
-## Legacy JS package
-
-The previous scripted version is kept in `contents/` with `metadata.json` at repository root.
+`100` means no change
