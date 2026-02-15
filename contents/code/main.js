@@ -11,7 +11,8 @@ var globalDimEffect = {
         globalDimEffect.saturation = clamp(effect.readConfig("Saturation", 67) / 100.0, 0.0, 1.0);
     },
     startAnimation: function (window) {
-        if (!window || !window.managed) {
+        if (!window || !window.managed || window.deleted || window.minimized || !window.visible) {
+            globalDimEffect.cancelAnimationInstant(window);
             return;
         }
 
@@ -54,11 +55,16 @@ var globalDimEffect = {
     applyToAllWindowsInstant: function () {
         var windows = effects.stackingOrder;
         for (var i = 0; i < windows.length; ++i) {
+            globalDimEffect.cancelAnimationInstant(windows[i]);
             globalDimEffect.startAnimationInstant(windows[i]);
         }
     },
+    slotDesktopChanged: function () {
+        globalDimEffect.applyToAllWindowsInstant();
+    },
     slotWindowAdded: function (window) {
         window.windowDesktopsChanged.connect(() => {
+            globalDimEffect.cancelAnimationInstant(window);
             globalDimEffect.startAnimationInstant(window);
         });
         window.minimizedChanged.connect(() => {
@@ -80,6 +86,8 @@ var globalDimEffect = {
 
         effect.configChanged.connect(globalDimEffect.slotConfigChanged);
         effects.windowAdded.connect(globalDimEffect.slotWindowAdded);
+        effects.windowClosed.connect(globalDimEffect.cancelAnimationInstant);
+        effects.desktopChanged.connect(globalDimEffect.slotDesktopChanged);
 
         for (const window of effects.stackingOrder) {
             globalDimEffect.slotWindowAdded(window);
